@@ -1,0 +1,77 @@
+.main {
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.carousel {
+  height: 550px;
+  max-height: 550px;
+}
+.carousel_controls>input {
+  display: none;
+}
+.carousel {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 550px;
+}
+.carousel_images {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  width: 100vw;
+  height: 100%;
+  transition: 0.5s;
+}
+.carousel_images img {
+  width: 100vw;
+  height: 550px;
+  max-height: 550px;
+  object-fit: cover;
+  vertical-align: center;
+}
+.carousel_controls {
+  height: 100%;
+  justify-content: flex-end;
+}
+
+/* CSS */
+.carousel_controls,
+.dots {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+.carousel_controls > label {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: 0.3s;
+}
+
+.carousel_controls >input:nth-child(1):checked ~
+.dots label:nth-child(1),
+.carousel_controls >input:nth-child(2):checked ~
+.dots label:nth-child(2),
+.carousel_controls >input:nth-child(3):checked ~
+.dots label:nth-child(3) {
+  background: rgba(255, 255, 255, 0.95);
+}
+.carousel_controls >input:nth-child(1):checked ~ .carousel_images {
+  translate: 0;
+}
+.carousel_controls >input:nth-child(2):checked ~ .carousel_images {
+  translate: -100vw;
+}
+.carousel_controls >input:nth-child(3):checked ~ .carousel_images {
+  translate: -200vw;
+}

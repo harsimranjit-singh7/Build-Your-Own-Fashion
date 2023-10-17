@@ -1,0 +1,73 @@
+
+/* Global.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.app_container {
+    display: flex;
+}
+
+.main_content {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+}
+
+.container {
+    padding: 20px;
+}
+
+.search_bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search_input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.add_user_btn {
+    padding: 10px 20px;
+    background-color: #27293d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user_card {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.remove_btn {
+    padding: 5px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #fc5c65;
+    color: white;
+}

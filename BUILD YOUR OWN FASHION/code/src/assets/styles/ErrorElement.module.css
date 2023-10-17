@@ -1,0 +1,10 @@
+.center{
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+}
+
+.center > p{
+    text-align: center;
+}

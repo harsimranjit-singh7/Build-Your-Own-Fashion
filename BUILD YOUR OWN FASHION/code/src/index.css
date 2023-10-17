@@ -1,0 +1,8 @@
+:root{
+  --primary : #00494d;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
