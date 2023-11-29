@@ -81,3 +81,19 @@
     justify-content: end;
     width: 100%;
 }
+
+
+.cartcontainer{
+    height:450px;
+    overflow:scroll;
+}
+
+.cartcontainer::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .cartcontainer {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }

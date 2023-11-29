@@ -3,7 +3,7 @@ const router = express.Router();
 const conn = require('../db');
 const sessionChecker = require('../middleware.js/sessionChecker');
 
-router.post('/',sessionChecker,async(req,res)=>{
+router.post('/',async(req,res)=>{
     try{
         const {limit} = req.body;
         const database = await conn();

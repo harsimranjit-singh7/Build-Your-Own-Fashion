@@ -2,13 +2,17 @@ import React, { useRef, useState } from 'react'
 import logincss from "../assets/styles/Login.module.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKey, faShirt, faUserLarge } from '@fortawesome/free-solid-svg-icons'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [err, setErr] = useState(false);
     const alert = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Access the previous location from the state (if it exists)
+    const from = location.state && location.state.from ? location.state.from : '/';
 
     const loginHandler = async (e) => {
         e.preventDefault();
@@ -30,12 +34,12 @@ const Login = () => {
                 .catch(err => console.log("Internal server error", err.message));
 
             if (data.success) {
-                localStorage.setItem("auth_token",data.authtoken)
-                localStorage.setItem("user",data.user.username)
-                localStorage.setItem("role",data.role);
-                if(data.role === "user"){
-                    navigate("/");
-                }else if(data.role === "admin"){
+                localStorage.setItem("auth_token", data.authtoken)
+                localStorage.setItem("user", data.user.username)
+                localStorage.setItem("role", data.role);
+                if (data.role === "user") {
+                    navigate(from);
+                } else if (data.role === "admin") {
                     navigate("/admin/Dashboard")
                 }
             } else {
@@ -67,8 +71,8 @@ const Login = () => {
         <main className={logincss.main}>
             <div className={logincss.container}>
                 <div className={logincss.header}>
-                    <h3>
-                        <FontAwesomeIcon style={{ fontWeight: 900, margin: "0 10px 0 0" }} icon={faShirt} />
+                    <h3 style={{color:"white"}}>
+                        <FontAwesomeIcon style={{ fontWeight: 900,color:"white", margin: "0 10px 0 0" }} icon={faShirt} />
                         Build Your Own Fashion
                     </h3>
                     <p>Enter the world of Fashion</p>

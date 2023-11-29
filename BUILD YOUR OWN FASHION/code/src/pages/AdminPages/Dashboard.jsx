@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export const Dashboard = () => {
     const navigate = useNavigate();
     const [orderSummary, setOrderSummary] = useState([]);
+    const [achievement, setAchievement] = useState([]);
     useEffect(() => {
         const fetchSummary = () => {
             const auth_token = localStorage.getItem("auth_token");
@@ -33,7 +34,51 @@ export const Dashboard = () => {
                 });
         }
         fetchSummary();
+
+
+
+        /*fetching dashboard stats */
+        const fetchDashboardStats = async () => {
+            try {
+                const response = await fetch('http://localhost:5400/api/admin/order/dashboardStats');
+                const data = await response.json();
+        
+                if (data.success) {
+                    const { totalUsers, totalOrders, placedOrders, pendingOrders } = data.stats;
+
+                    setAchievement([
+                        {
+                            label: 'Total Users:',
+                            value: totalUsers
+                        },
+                        {
+                            label: 'Placed Orders:',
+                            value: placedOrders
+                        },
+                        {
+                            label: 'Total Orders:',
+                            value: totalOrders
+                        },
+                        {
+                            label: 'Orders Pending',
+                            value: pendingOrders
+                        },
+                    ])
+
+                } else {
+                    console.error("Failed to fetch stats:", data.message);
+                }
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+            }
+        };
+        
+        // Call the function
+        fetchDashboardStats();
+        
+
     }, []);
+
 
 
     const achievementsData = [
@@ -46,12 +91,8 @@ export const Dashboard = () => {
             value: 2500
         },
         {
-            label: 'Products Sold',
+            label: 'Orders Pending',
             value: 10000
-        },
-        {
-            label: 'Reviews Received',
-            value: 7500
         }
     ];
     const isAdmin = localStorage.getItem("role");
@@ -71,7 +112,7 @@ export const Dashboard = () => {
                             {/* Rest of your app content goes here */}
                             <div>
                                 <h1>Achievements</h1>
-                                <AchievementCards achievements={achievementsData} />
+                                <AchievementCards achievements={achievement} />
                             </div>
                             <OrderList orders={orderSummary} />
                         </div>

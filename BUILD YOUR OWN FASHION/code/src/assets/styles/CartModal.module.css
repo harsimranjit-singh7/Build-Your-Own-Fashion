@@ -1,0 +1,427 @@
+.main_body {
+  margin: 0;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: gainsboro;
+}
+
+.main_body > button {
+  width: 100%;
+  background-color: var(--primary);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: medium;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: 0.2s ease;
+}
+.main_body > button:hover {
+  background-color: #004548;
+  scale: 0.98;
+}
+
+/*background css*/
+.modal_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: scale(1, 1);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  z-index: 5;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.381);
+  animation: background-in 1s both;
+}
+
+/* styles.css */
+.modal_open {
+  opacity: 1;
+  visibility: visible;
+}
+.modal_closed {
+  opacity: 0;
+  visibility: hidden;
+  translate: -50% -50%;
+}
+
+.modal_background_open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*modal css*/
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 850px;
+  height: 400px;
+  padding: 48px 40px;
+  border-radius: 12px;
+  background: white;
+  color: black;
+  z-index: 6;
+  transition: 0.5s;
+  animation: modal-in 1s;
+  display: flex;
+}
+
+/*left section css of modal */
+.left_section {
+  width: 50%;
+}
+
+.item_image {
+  margin: 20px 0 0;
+  width: 100%;
+  height: 280px;
+}
+
+.item_image > img {
+  width: inherit;
+  height: inherit;
+  object-fit: contain;
+}
+
+.image_cover {
+  position: absolute;
+  width: 45%;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.image_cover > button {
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #004548;
+}
+
+.customize {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.color_customize {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/*this is radio selector css*/
+.radio_group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio_button {
+    display: none;
+  }
+  
+  .radio_label {
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .radio_custom {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;/* Replace with your desired radio button color */
+    
+    border: 1px solid black;
+    position: relative;
+  }
+  
+  .radio_layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(200, 200, 200, 0.5); /* Light gray layer */
+    border-radius: 50%;
+    display: none;
+  }
+  
+/* .radio_button:checked + .radio_custom .radio_layer {
+  border: "2px solid orange";
+}
+.radio_button:checked + .radio_label .radio_layer {
+   display: block;
+} */
+  
+/* adding css to text input*/
+.text_input{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customize input[type=text]{
+  margin: 20px 0;
+  width: 60%;
+  align-self: center;
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid var(--primary);
+}
+.customize input[type=text]:focus{
+  border: 2px solid blue;
+}
+
+/*right section of the modal*/
+/*product details*/
+.right_section{
+  position: relative;
+  width: 50%;
+  margin-top:-10px ;
+}
+
+.product_details{
+  color: var(--primary);
+}
+
+.selectNo{
+  margin: -5px 0;
+  display: flex;
+  gap: 5px;
+}
+
+.selectNo input{
+  margin-top: 5px;
+  width: 10px;
+  font-weight: 600;
+  height: 20px;
+  font-size: larger;
+  border: none;
+  outline: none;
+  color: var(--primary);
+  opacity: 1;
+} 
+
+.selectNo button{
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  padding: 5px 6px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: white;  
+  font-size: large;
+  color: var(--primary);
+}
+
+.selectNo button:hover{
+  background-color: var(--primary);
+  color: white;
+  scale: 0.99;
+  transition: 0.2s ease;
+}
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 25px;
+  border: 1px solid #d4d4d4;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* .radio_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.radio_label {
+  margin-left: 10px;
+}
+
+.radio_input:checked + .radio_label {
+  background-color: #f5f5f5;  /* Adjust this color to match your design 
+  border-radius: 5px;
+  padding: 5px;
+} */
+
+
+
+/*right section place order button*/
+.place_order_btn{
+  position: absolute;
+  width: 100%;
+  background-color: var(--primary);
+  color: white;
+  bottom: -5px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size:medium;
+  cursor: pointer;
+  z-index: 11;
+  transition: 0.2s ease;
+}
+
+.place_order_btn:hover{
+  scale: 1.01;
+}
+
+
+.wrap_sizes{
+  margin: 20px 0;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.wrap_sizes > input{
+  display: none;
+}
+
+.wrap_sizes > label{
+  border: 2px solid var(--primary);
+  width: 20px;
+  text-align: center;
+  overflow: hidden;
+  padding: 3px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.wrap_sizes > label:hover{
+  background-color: var(--primary);
+  color: white;
+  scale: 1.05;
+  transition: 0.2s ease;
+}
+
+.size_selected{
+  background-color: var(--primary);
+  color: white;
+}
+
+.size_diselected{
+  background-color: white;
+  color: #004548;
+}
+
+
+/*address details form*/
+.address_details_form{
+  width: 100%;
+}
+.address_details_form>textarea{
+  resize: none;
+  padding: 5px 10px;
+  font-size: large;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+.address_details_form>textarea:focus{
+  outline: 2px solid blue;
+  border-radius: 3px;
+}
+.cityPincode{
+  width: 100%;
+  display: flex;
+  margin: 10px 0;
+  justify-content: space-between;
+}
+
+.cityPincode>input{
+  width: 45%;
+  padding: 10px 8px;
+  outline: none;
+  font-size: medium;
+  font-weight: 500;
+  border-radius: 3px;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.cityPincode>input:focus{
+  border: none;
+  outline: 2px solid blue;
+}
+
+/* styles.css */
+@keyframes background-in {
+  0% {
+    scale: 0 0.005;
+  }
+  33% {
+    scale: 1 0.005;
+  }
+  66%,
+  100% {
+    scale: 1 1;
+  }
+}
+@keyframes modal-in {
+  0%,
+  66% {
+    opacity: 0;
+    visibility: hidden;
+    translate: -50% -30%;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.credit_card_section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+.credit_card_section input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+.credit_card_section .expiry_section {
+    display: flex;
+    justify-content: space-between;
+}
+.credit_card_section .expiry_section input {
+    width: 48%; /* Two inputs side by side with some spacing */
+}
+
+.shipping_details_section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+.shipping_details_section input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.charges_section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    font-weight: bold;
+}

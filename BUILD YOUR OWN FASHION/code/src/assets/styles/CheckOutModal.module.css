@@ -1,0 +1,451 @@
+.main_body {
+    margin: 0;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background-color: gainsboro;
+  }
+  
+  .main_body > button {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: medium;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s ease;
+  }
+  .main_body > button:hover {
+    background-color: #004548;
+    scale: 0.98;
+  }
+  
+  /*background css*/
+  .modal_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: scale(1, 1);
+    width: 100%;
+    height: 100%;
+    display: grid;
+    z-index: 5;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.381);
+    animation: background-in 1s both;
+  }
+  
+  /* styles.css */
+  .modal_open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .modal_closed {
+    opacity: 0;
+    visibility: hidden;
+    translate: -50% -50%;
+  }
+  
+  .modal_background_open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /*modal css*/
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 850px;
+    height: 400px;
+    padding: 48px 40px;
+    border-radius: 12px;
+    background: white;
+    color: black;
+    z-index: 6;
+    transition: 0.5s;
+    animation: modal-in 1s;
+    display: flex;
+  }
+  
+  /* adding css to text input*/
+  .text_input{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .customize input[type=text]{
+    margin: 20px 0;
+    width: 60%;
+    align-self: center;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid var(--primary);
+  }
+  .customize input[type=text]:focus{
+    border: 2px solid blue;
+  }
+  
+  /*right section of the modal*/
+  /*product details*/
+  .right_section{
+    position: relative;
+    width: 50%;
+    margin-top:-10px ;
+  }
+  
+  .product_details{
+    color: var(--primary);
+  }
+  
+  .selectNo{
+    margin: -5px 0;
+    display: flex;
+    gap: 5px;
+  }
+  
+  .selectNo input{
+    margin-top: 5px;
+    width: 10px;
+    font-weight: 600;
+    height: 20px;
+    font-size: larger;
+    border: none;
+    outline: none;
+    color: var(--primary);
+    opacity: 1;
+  } 
+  
+  .selectNo button{
+    border: 1px solid var(--primary);
+    border-radius: 999px;
+    padding: 5px 6px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: white;  
+    font-size: large;
+    color: var(--primary);
+  }
+  
+  .selectNo button:hover{
+    background-color: var(--primary);
+    color: white;
+    scale: 0.99;
+    transition: 0.2s ease;
+  }
+  
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 25px;
+    border: 1px solid #d4d4d4;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  
+  /*right section place order button*/
+  .place_order_btn{
+    position: absolute;
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    bottom: -5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size:medium;
+    cursor: pointer;
+    z-index: 11;
+    transition: 0.2s ease;
+  }
+  
+  .place_order_btn:hover{
+    scale: 1.01;
+  }
+  
+  
+  .wrap_sizes{
+    margin: 20px 0;
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .wrap_sizes > input{
+    display: none;
+  }
+  
+  .wrap_sizes > label{
+    border: 2px solid var(--primary);
+    width: 20px;
+    text-align: center;
+    overflow: hidden;
+    padding: 3px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .wrap_sizes > label:hover{
+    background-color: var(--primary);
+    color: white;
+    scale: 1.05;
+    transition: 0.2s ease;
+  }
+  
+  .size_selected{
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .size_diselected{
+    background-color: white;
+    color: #004548;
+  }
+  
+  
+  /*address details form*/
+  .address_details_form{
+    width: 100%;
+  }
+  .address_details_form>textarea{
+    resize: none;
+    padding: 5px 10px;
+    font-size: large;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+  }
+  .address_details_form>textarea:focus{
+    outline: 2px solid blue;
+    border-radius: 3px;
+  }
+  .cityPincode{
+    width: 100%;
+    display: flex;
+    margin: 10px 0;
+    justify-content: space-between;
+  }
+  
+  .cityPincode>input{
+    width: 45%;
+    padding: 10px 8px;
+    outline: none;
+    font-size: medium;
+    font-weight: 500;
+    border-radius: 3px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+  }
+  
+  .cityPincode>input:focus{
+    border: none;
+    outline: 2px solid blue;
+  }
+  
+  /* styles.css */
+  @keyframes background-in {
+    0% {
+      scale: 0 0.005;
+    }
+    33% {
+      scale: 1 0.005;
+    }
+    66%,
+    100% {
+      scale: 1 1;
+    }
+  }
+  @keyframes modal-in {
+    0%,
+    66% {
+      opacity: 0;
+      visibility: hidden;
+      translate: -50% -30%;
+    }
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  .credit_card_section {
+      padding: 20px;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+  }
+  .credit_card_section input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+  }
+  .credit_card_section .expiry_section {
+      display: flex;
+      justify-content: space-between;
+  }
+  .credit_card_section .expiry_section input {
+      width: 48%; /* Two inputs side by side with some spacing */
+  }
+  
+  .shipping_details_section {
+      padding: 20px;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+  }
+  .shipping_details_section input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+  }
+  
+  .charges_section {
+      padding: 20px;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+      font-weight: bold;
+  }
+  
+  input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+  }
+  
+  input:focus {
+      border-color: #007BFF;
+  }
+  
+  section {
+      padding: 20px;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #333;
+  }
+  
+  .confirm_button {
+      display: block;
+      width: 100%;
+      padding: 12px 15px;
+      background-color: #007BFF;
+      color: #FFF;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+  }
+  
+  .confirm_button:hover {
+      background-color: #0056b3;
+  }
+    
+  .left_section::-webkit-scrollbar {
+    display: none;
+  }
+  .left_section {
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+  }
+  .left_section {
+      width: 75%; /* Occupies most of the modal width */
+      overflow-y: auto; /* Scrollable if content exceeds the modal height */
+      padding-right: 20px;
+      box-sizing: border-box;
+      height: 100%;
+      float: left; /* Placed to the left */
+  }
+  
+  .right_section {
+      width: 25%; /* Takes up the remaining modal width */
+      height: 100%;
+      float: right; /* Placed to the right */
+      position: sticky; /* Keeps it fixed when left section is scrolled */
+      top: 0; /* Fixes it to the top */
+      padding-left: 20px;
+      box-sizing: border-box;
+      border-left: 1px solid #ddd;
+  }
+  
+  .right_section {
+      background-color: #f7f9fc; /* subtle background */
+      padding: 20px;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .charges_section p {
+      font-size: 16px; /* increased font size */
+      margin-bottom: 15px; /* added space between amounts */
+  }
+  
+  .charges_section p:last-child {
+      font-weight: bold; /* highlight total amount */
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+      margin-top: 20px;
+  }
+  
+  .completeMark>button:hover{
+    background-color: #004549;
+    color: white;
+    scale: 1.02;
+    transition: 0.2s ease;
+  }
+  .completeMark>button{
+    border: 1px solid #004549;
+    background-color: white;
+    color: #004549;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 10px;
+  }
+  .completeMark{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .completeImg>img{
+    width: inherit;
+    height: inherit;
+  }
+  .completeImg{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

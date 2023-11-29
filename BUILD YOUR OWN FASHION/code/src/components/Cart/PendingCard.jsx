@@ -4,19 +4,22 @@ import productImg from '../../assets/images/product.jpg'
 import { Image } from 'cloudinary-react';
 
 function ProductCard({pendingOrder,orderDetails,product_details,RemoveHandler}) {
+    let image = ""; 
+    if(orderDetails.selectedStyle !== ""){
+        image = `${product_details.product_name +product_details.product_id+ "/styles/" + orderDetails.selectedColor + orderDetails.selectedStyle}`
+    }
     return (
         <div className={cartcss.product_card}>
             <div className={cartcss.product_info}>
                 {/* <img src={productImg} alt={product_details.product_name} /> */}
                 <Image
                         cloudName="dxahez5ol"
-                        publicId={`ecomm/${product_details.product_images[0]}`}
+                        publicId={`ecomm/${image ?image :  product_details.product_images[0]}`}
                         crop="fill"
                         alt="product_img"
                         className={cartcss.product_image}
                     />
                 <h2>{product_details.product_name}</h2>
-                <p>Price: {product_details.base_price}</p>
             </div>
             <div className={cartcss.rightsection_cart}>
             <div className={cartcss.remove_btn_div}>
@@ -31,14 +34,17 @@ function ProductCard({pendingOrder,orderDetails,product_details,RemoveHandler}) 
                     Ordered Color: <span style={{fontWeight:400}}>{orderDetails.selectedColor}</span>
                 </strong>
                 <strong>
+                    Ordered Style: <span style={{fontWeight:400}}>{orderDetails.selectedStyle}</span>
+                </strong>
+                <strong>
                     Ordered Size: <span style={{fontWeight:400}}>{orderDetails.selectedSize}</span>
                 </strong>
                 <strong>
                     Ordered Quantity: <span style={{fontWeight:400}}>{orderDetails.quantity}</span>
                 </strong>
-                <h3>
-                    Address Details: <span style={{fontSize:"medium",fontWeight:500}}>{orderDetails.address + ", " + orderDetails.city + ", " + orderDetails.pincode}</span>
-                </h3>
+                <strong>
+                    Total Price: <span style={{fontWeight:400,fontSize:"30px"}}>$ {Math.abs(pendingOrder.total_price).toFixed(2)}</span>
+                </strong>
             </div>
             </div>
         </div>

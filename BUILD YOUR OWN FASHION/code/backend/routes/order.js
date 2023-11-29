@@ -6,7 +6,7 @@ const sessionChecker = require('../middleware.js/sessionChecker');
 
 
 
-router.get('/pendingCount',sessionChecker, async (req, res) => {
+router.get('/pendingCount', sessionChecker, async (req, res) => {
     try {
         const userId = parseInt(req.user.id); // Assuming user_id is a number, else remove parseInt()
 
@@ -19,7 +19,7 @@ router.get('/pendingCount',sessionChecker, async (req, res) => {
         res.status(200).json({ success: true, pendingOrdersCount: count });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Internal Server Error' ,error:error.message});
+        res.status(500).json({ success: false, message: 'Internal Server Error', error: error.message });
     }
 });
 
@@ -28,33 +28,33 @@ router.post('/addtocart', sessionChecker, async (req, res) => {
         const database = await conn();
         const order_collection = await database.collection("Orders");
         const orderDetail_collection = await database.collection("OrderDetails");
-        const { selectedColor, selectedSize, address, pincode, city, quantity, product_id, unit_price } = req.body.orderDetails;
+        const { selectedColor, selectedSize, quantity, product_id, unit_price, selectedStyle } = req.body.orderDetails;
         const schema = Joi.object({
             selectedColor: Joi.string()
                 .pattern(/^[A-Za-z]+$/)
                 .required(),
 
-            selectedSize: Joi.string().required(), // Add more constraints if necessary
+            selectedSize: Joi.string().required(),
+            unit_price: Joi.number().required(),
+            quantity: Joi.number().required()
+            // address: Joi.string().pattern(/^[A-Za-z0-9\s\-.,/]+$/)
+            //     .message('address may contain hyphen, fullstop, slash, comma, and no other special character').required(),
 
-            address: Joi.string().pattern(/^[A-Za-z0-9\s\-.,/]+$/)
-                .message('address may contain hyphen, fullstop, slash, comma, and no other special character').required(),
+            // pincode: Joi.string()
+            //     .pattern(/^[A-Z0-9]{6}$/)
+            //     .required(),
 
-            pincode: Joi.string()
-                .pattern(/^[A-Z0-9]{6}$/)
-                .required(),
-
-            city: Joi.string()
-                .pattern(/^[A-Za-z\s]+$/)
-                .required(),
+            // city: Joi.string()
+            //     .pattern(/^[A-Za-z\s]+$/)
+            //     .required(),
         });
 
         // Validate
         const result = schema.validate({
             selectedColor,
             selectedSize,
-            address,
-            pincode,
-            city,
+            unit_price: parseFloat(unit_price),
+            quantity: parseInt(quantity)
         });
 
         if (result.error) {
@@ -78,13 +78,15 @@ router.post('/addtocart', sessionChecker, async (req, res) => {
         const orderDetailsAck = await orderDetail_collection.insertOne({
             order_detail_id: newOrderDetailsID, // Determine how you'd like to generate this
             order_id: newOrderId,
-            address,
-            city,
-            pincode,
+            // address: '',
+            // city: '',
+            // state: '',
+            // pincode: '',
             product_id,
             selectedColor,
             quantity,
             selectedSize,
+            selectedStyle: selectedStyle || "",
             unit_price
         });
 
@@ -98,13 +100,91 @@ router.post('/addtocart', sessionChecker, async (req, res) => {
 });
 
 
-router.get('/pendingOrders',sessionChecker, async (req, res) => {
+
+/* api to get placed orders */
+router.post('/orders/placed',sessionChecker, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        console.log(userId)
+        const db = await conn();
+        const Order = await db.collection("Orders");
+
+        const orders = await Order.aggregate([
+            {
+                $match: {
+                    user_id: parseInt(userId), // assuming user_id is stored as a number
+                    order_status: "Placed"
+                }
+            },
+            {
+                $lookup: {
+                    from: "OrderDetails",
+                    localField: "order_id",
+                    foreignField: "order_id",
+                    as: "orderDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "Products",
+                    localField: "orderDetails.product_id",
+                    foreignField: "product_id",
+                    as: "productDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "order_shipped_details",
+                    localField: "order_id",
+                    foreignField: "order_id",
+                    as: "shippingDetails"
+                }
+            },
+            {
+                $unwind: "$productDetails"
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    orderData: { $first: "$$ROOT" },
+                    products: { $push: "$productDetails" }
+                }
+            },
+            {
+                $replaceRoot: {
+                    newRoot: {
+                        $mergeObjects: ["$orderData", "$$ROOT"]
+                    }
+                }
+            },
+            {
+                $project: {
+                    orderData: 0
+                }
+            }
+        ]).toArray();
+
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ success: false, message: "No placed orders found for this user" });
+        }
+
+        res.status(200).json({ success: true, orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+});
+
+
+
+
+router.get('/pendingOrders', sessionChecker, async (req, res) => {
     try {
         const database = await conn();
         const Orders = await database.collection("Orders");
         // const userId = req.user.id; 
-        const userId = req.user.id; 
-        
+        const userId = req.user.id;
+
         const pipeline = [
             {
                 $match: {
@@ -137,7 +217,7 @@ router.get('/pendingOrders',sessionChecker, async (req, res) => {
         ]
 
         const results = await Orders.aggregate(pipeline).toArray();
-        res.status(200).json({success:true,msg:"Successful",results});
+        res.status(200).json({ success: true, msg: "Successful", results });
     } catch (err) {
         res.status(500).json({ success: false, error: "Internal server error" });
     }
@@ -154,27 +234,59 @@ router.delete('/removeOrder/:order_id', async (req, res) => {
 
         await OrderDetail.deleteMany({ order_id: parseInt(orderID) });
 
-        res.status(200).send({ success:true,msg: 'Successfully deleted order and its details.' });
+        res.status(200).send({ success: true, msg: 'Successfully deleted order and its details.' });
     } catch (error) {
-        res.status(500).send({ success:false,msg: 'Failed to delete order.', error: error.message });
+        res.status(500).send({ success: false, msg: 'Failed to delete order.', error: error.message });
     }
 });
 
 
-router.put('/updateStatusToPlaced', async (req, res) => {
+router.post('/updateStatusToPlaced', async (req, res) => {
+    const orderSchema = Joi.object({
+        orderIds:Joi.array().required(),
+        shippingAddress: Joi.string().required(),
+        city: Joi.string().required(),
+        stateProvince: Joi.string().required(),
+        postalCode: Joi.string().required(),
+        country: Joi.string().required(),
+        creditCardNumber: Joi.string().creditCard().required(),
+        nameOnCard: Joi.string().required(),
+        cvv: Joi.string().length(3).pattern(/^[0-9]+$/).required(),
+        expiryMonth: Joi.string().length(2).pattern(/^[0-9]+$/).required(),
+        expiryYear: Joi.string().length(2).pattern(/^[0-9]+$/).required()
+    });
+
+    const validationResult = await orderSchema.validate(req.body);
+    if (validationResult.error) {
+        return res.status(400).send({ success: false, message: validationResult.error.details[0].message });
+    }
     try {
         const orderIds = req.body.orderIds;
         const db = await conn();
-        
+
         const result = await db.collection('Orders').updateMany(
             { order_id: { $in: orderIds } },
             { $set: { order_status: "Placed" } }
         );
 
-        res.status(200).json({ success: true, message: 'Orders updated successfully' });
+        const documents = req.body.orderIds.map(element => ({
+            order_id: element,
+            shippingAddress:req.body.shippingAddress,
+            city:req.body.city,
+            stateProvince:req.body.stateProvince,
+            postalCode:req.body.postalCode,
+            country:req.body.country,
+            payment: "Online"
+        }));
+        
+        // Use insertMany to insert all documents in a single operation
+        const result2 = await db.collection("order_shipped_details").insertMany(documents);
+        if(result2){
+            return res.status(200).json({ success: true, message: 'Orders updated successfully'});
+        }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Internal Server Error' });
+        res.status(500).json({ success: false, message: 'Internal Server Error',error:error.message });
     }
 });
 

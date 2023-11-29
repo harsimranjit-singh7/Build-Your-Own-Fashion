@@ -76,6 +76,8 @@ function Product() {
             });
     };
 
+    console.log(isAdmin)
+
     return (
         <>
             {

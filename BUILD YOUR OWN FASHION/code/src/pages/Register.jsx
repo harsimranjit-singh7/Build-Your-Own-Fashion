@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import logincss from "../assets/styles/Login.module.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKey, faShirt, faUserLarge } from '@fortawesome/free-solid-svg-icons'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 const Register = () => {
@@ -10,6 +10,8 @@ const Register = () => {
     const [err, setErr] = useState(false);
     const alert = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state && location.state.from ? location.state.from : '/';
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -32,7 +34,8 @@ const Register = () => {
             if (data.success) {
                 localStorage.setItem("auth_token",data.authtoken)
                 localStorage.setItem("user",data.user.username)
-                navigate("/");
+                localStorage.setItem("role","user");
+                navigate(from);
             } else {
                 setErr(true);
                 e.target.innerHTML = "Log in";
@@ -62,8 +65,8 @@ const Register = () => {
         <main className={logincss.main}>
             <div className={logincss.container}>
                 <div className={logincss.header}>
-                    <h3>
-                        <FontAwesomeIcon style={{ fontWeight: 900, margin: "0 10px 0 0" }} icon={faShirt} />
+                    <h3 style={{color:"white"}}>
+                        <FontAwesomeIcon style={{ fontWeight: 900,color:"white", margin: "0 10px 0 0" }} icon={faShirt} />
                         Build Your Own Fashion
                     </h3>
                     <p>Join the world of fashion</p>

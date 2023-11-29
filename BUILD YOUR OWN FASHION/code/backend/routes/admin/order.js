@@ -41,4 +41,28 @@ router.get('/orderSummary', async (req, res) => {
     }
 });
 
+
+router.get('/dashboardStats', async (req, res) => {
+    try {
+        const db = await conn();
+
+        const totalUsers = await db.collection('user_details').countDocuments();
+        const totalOrders = await db.collection('Orders').countDocuments();
+        const placedOrders = await db.collection('Orders').countDocuments({ order_status: 'Placed' });
+        const pendingOrders = await db.collection('Orders').countDocuments({ order_status: 'Pending' });
+
+        const stats = {
+            totalUsers,
+            totalOrders,
+            placedOrders,
+            pendingOrders
+        };
+
+        res.status(200).json({ success: true, stats });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Internal server error', error: error.message });
+    }
+});
+
+
 module.exports = router;

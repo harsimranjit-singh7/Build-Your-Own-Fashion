@@ -149,13 +149,14 @@
     color: #fff;
     padding: 10px 15px;
     position: absolute;
-    top: -60px; /* Start off-screen */
+    top: -400px; /* Start off-screen */
+    left: 33.5%;
     width: 100%;
     text-align: center;
-    transition: top 0.5s ease-in-out;
+    transition: top 1.5s ease-in;
     width: 31%;
     border-radius:5px;
-    transform: -50% -50%;
+    transform: translate(-50% -50%);
 }
 
 .showAlert {

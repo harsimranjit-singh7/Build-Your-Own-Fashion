@@ -64,12 +64,6 @@ const ProductAdd = () => {
         setErr(true);
         alert.current.innerHTML = "Editing..."
         e.preventDefault();
-        if(!typeof available_colors === Object){
-            formData.available_colors = formData.available_colors.split(',');
-        }
-        if(!typeof available_sizes === Object){
-            formData.available_sizes = formData.available_sizes.split(',');
-        }
         try {
             const response = await fetch(`http://localhost:5400/api/admin/product/updateProduct`, {
                 method: 'PUT',
@@ -78,8 +72,8 @@ const ProductAdd = () => {
                 },
                 body: JSON.stringify({
                     product_id:product_id,
-                    available_colors: typeof available_colors === 'object'? formData.available_colors:formData.available_colors.split(','),
-                    available_sizes:typeof available_sizes === 'object'? formData.available_sizes:formData.available_sizes.split(','),
+                    available_colors: typeof available_colors !== 'object'? formData.available_colors:formData.available_colors.split(','),
+                    available_sizes:typeof available_sizes !== 'object'? formData.available_sizes:formData.available_sizes.split(','),
                     product_name:formData.product_name,
                     product_desc:formData.product_desc,
                     base_price:formData.base_price
@@ -97,7 +91,7 @@ const ProductAdd = () => {
                 throw new Error(result.message);
             }
         } catch (error) {
-            console.error("There was a problem with the fetch operation:", error.message);
+            console.error("There was a problem with the update operation:", error.message);
         }
     };
 
@@ -147,7 +141,7 @@ return (
                                         onChange={handleChange}
                                     ></textarea>
 
-                                    <button type="submit">Add Product</button>
+                                    <button type="submit">Edit Product</button>
                                 </form>
                             </div>
                         </div>
